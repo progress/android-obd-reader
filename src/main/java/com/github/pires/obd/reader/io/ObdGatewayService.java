@@ -21,8 +21,8 @@ import com.github.pires.obd.commands.temperature.AmbientAirTemperatureCommand;
 import com.github.pires.obd.enums.ObdProtocols;
 import com.github.pires.obd.exceptions.UnsupportedCommandException;
 import com.github.pires.obd.reader.R;
-import com.github.pires.obd.reader.activity.ConfigActivity;
-import com.github.pires.obd.reader.activity.MainActivity;
+//import com.github.pires.obd.reader.activity.MainActivity;
+import com.github.pires.obd.reader.config.ObdConfig;
 import com.github.pires.obd.reader.io.ObdCommandJob.ObdCommandJobState;
 import com.google.inject.Inject;
 
@@ -50,7 +50,7 @@ public class ObdGatewayService extends AbstractGatewayService {
         Log.d(TAG, "Starting service..");
 
         // get the remote Bluetooth device
-        final String remoteDevice = prefs.getString(ConfigActivity.BLUETOOTH_LIST_KEY, null);
+        final String remoteDevice = prefs.getString(ObdConfig.BLUETOOTH_LIST_KEY, null);
         if (remoteDevice == null || "".equals(remoteDevice)) {
             Toast.makeText(ctx, getString(R.string.text_bluetooth_nodevice), Toast.LENGTH_LONG).show();
 
@@ -83,7 +83,7 @@ public class ObdGatewayService extends AbstractGatewayService {
             Log.d(TAG, "Stopping Bluetooth discovery.");
             btAdapter.cancelDiscovery();
 
-            showNotification(getString(R.string.notification_action), getString(R.string.service_starting), R.drawable.ic_btcar, true, true, false);
+//            showNotification(getString(R.string.notification_action), getString(R.string.service_starting), R.drawable.ic_btcar, true, true, false);
 
             try {
                 startObdConnection();
@@ -98,7 +98,7 @@ public class ObdGatewayService extends AbstractGatewayService {
                 stopService();
                 throw new IOException();
             }
-            showNotification(getString(R.string.notification_action), getString(R.string.service_started), R.drawable.ic_btcar, true, true, false);
+//            showNotification(getString(R.string.notification_action), getString(R.string.service_started), R.drawable.ic_btcar, true, true, false);
         }
     }
 
@@ -140,7 +140,7 @@ public class ObdGatewayService extends AbstractGatewayService {
         queueJob(new ObdCommandJob(new TimeoutCommand(62)));
 
         // Get protocol from preferences
-        final String protocol = prefs.getString(ConfigActivity.PROTOCOLS_LIST_KEY, "AUTO");
+        final String protocol = prefs.getString(ObdConfig.PROTOCOLS_LIST_KEY, "AUTO");
         queueJob(new ObdCommandJob(new SelectProtocolCommand(ObdProtocols.valueOf(protocol))));
 
         // Job for returning dummy data
@@ -161,7 +161,7 @@ public class ObdGatewayService extends AbstractGatewayService {
     @Override
     public void queueJob(ObdCommandJob job) {
         // This is a good place to enforce the imperial units option
-        job.getCommand().useImperialUnits(prefs.getBoolean(ConfigActivity.IMPERIAL_UNITS_KEY, false));
+        job.getCommand().useImperialUnits(prefs.getBoolean(ObdConfig.IMPERIAL_UNITS_KEY, false));
 
         // Now we can pass it along
         super.queueJob(job);
@@ -217,12 +217,12 @@ public class ObdGatewayService extends AbstractGatewayService {
 
             if (job != null) {
                 final ObdCommandJob job2 = job;
-                ((MainActivity) ctx).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ((MainActivity) ctx).stateUpdate(job2);
-                    }
-                });
+//                ((MainActivity) ctx).runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        ((MainActivity) ctx).stateUpdate(job2);
+//                    }
+//                });
             }
         }
     }

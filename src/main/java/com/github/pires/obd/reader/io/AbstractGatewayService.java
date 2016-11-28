@@ -9,8 +9,6 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-
-import com.github.pires.obd.reader.activity.MainActivity;
 import com.google.inject.Inject;
 
 import java.io.IOException;
@@ -95,26 +93,26 @@ public abstract class AbstractGatewayService extends RoboService {
     /**
      * Show a notification while this service is running.
      */
-    protected void showNotification(String contentTitle, String contentText, int icon, boolean ongoing, boolean notify, boolean vibrate) {
-        final PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, new Intent(ctx, MainActivity.class), 0);
-        final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ctx);
-        notificationBuilder.setContentTitle(contentTitle)
-                .setContentText(contentText).setSmallIcon(icon)
-                .setContentIntent(contentIntent)
-                .setWhen(System.currentTimeMillis());
-        // can cancel?
-        if (ongoing) {
-            notificationBuilder.setOngoing(true);
-        } else {
-            notificationBuilder.setAutoCancel(true);
-        }
-        if (vibrate) {
-            notificationBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
-        }
-        if (notify) {
-            notificationManager.notify(NOTIFICATION_ID, notificationBuilder.getNotification());
-        }
-    }
+//    protected void showNotification(String contentTitle, String contentText, int icon, boolean ongoing, boolean notify, boolean vibrate) {
+//        final PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, new Intent(ctx, MainActivity.class), 0);
+//        final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ctx);
+//        notificationBuilder.setContentTitle(contentTitle)
+//                .setContentText(contentText).setSmallIcon(icon)
+//                .setContentIntent(contentIntent)
+//                .setWhen(System.currentTimeMillis());
+//        // can cancel?
+//        if (ongoing) {
+//            notificationBuilder.setOngoing(true);
+//        } else {
+//            notificationBuilder.setAutoCancel(true);
+//        }
+//        if (vibrate) {
+//            notificationBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
+//        }
+//        if (notify) {
+//            notificationManager.notify(NOTIFICATION_ID, notificationBuilder.getNotification());
+//        }
+//    }
 
     public void setContext(Context c) {
         ctx = c;
